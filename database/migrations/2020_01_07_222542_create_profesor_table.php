@@ -17,7 +17,7 @@ class CreateProfesorTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('gmail');
+            $table->string('gmail')->unique();
             $table->string('descripcion')->nullable();
             $table->timestamps();
         });

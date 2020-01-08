@@ -17,8 +17,8 @@ class CreateAlumnoTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('gmail');
-            $table->string('cui');
+            $table->string('gmail')->unique();
+            $table->string('cui')->unique();
             $table->boolean('autorizacion')->default(false);
             $table->boolean('matriculado')->default(false);
             
