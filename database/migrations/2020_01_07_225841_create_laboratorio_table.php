@@ -19,10 +19,10 @@ class CreateLaboratorioTable extends Migration
             $table->string('grupo',1);
             $table->timestamps();
 
-            $table->unsignedBigInteger('curso_id')->nullable();
+            $table->unsignedBigInteger('curso_id');
             $table->foreign('curso_id')
                 ->references('id')->on('cursos')
-                ->onDelete('cascade');
+                ->onDelealumnote('cascade');
 
             $table->unsignedBigInteger('profesor_id')->nullable();
             $table->foreign('profesor_id')

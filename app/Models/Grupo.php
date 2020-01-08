@@ -10,4 +10,8 @@ class Grupo extends Model
     protected $fillable = [
         'numero', 'descripcion','fechaInicio', 'fechaFin'
     ];
+
+    public function alumnos(){
+        return $this->hasMany(Alumno::class,'grupo_id');
+    }
 }

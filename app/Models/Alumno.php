@@ -15,6 +15,10 @@ class Alumno extends Model
         'matriculado'=>'boolean'
     ];
 
+    public function grupo(){
+        // Relacion de 1 --> * (Inverso)
+        return $this->belongsTo(Grupo::class,'grupo_id');
+    }
     public static function findByGmail($gmail){
         return static::where('gmail',$gmail)->first();
     }
