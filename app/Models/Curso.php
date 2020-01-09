@@ -15,5 +15,8 @@ class Curso extends Model
         return $this->hasMany(Laboratorio::class,'curso_id');
     }
 
+    public function alumnos(){
+        return $this->belongsToMany(Alumno::class,'matriculas')->using(Matricula::class)->withPivot('id','periodo_id','laboratorio_id');
+    }
 }
 

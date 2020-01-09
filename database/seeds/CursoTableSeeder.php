@@ -11,10 +11,10 @@ class CursoTableSeeder extends Seeder
      */
     public function run()
     {
-        $this -> insertarCursos(5);
+        $this -> insertarCursos(10);
     }
     
     private function insertarCursos($cantidad) {
-        factory(Curso::class, $cantidad)->create();
+        factory(Curso::class, $cantidad)->create(['tieneLab'=>true]);
     }
 }

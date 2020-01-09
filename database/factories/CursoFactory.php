@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Curso::class, function (Faker $faker) {
 
     return [
-        'nombre' => $faker->lexify('????? ?????'),
+        'nombre' => $faker->lexify('Curso ?????'),
         'codigo'=>$faker->numberBetween($inicio = 13001, $fin=17100),
         'tieneLab' => rand(0,1) == 1,
     ];

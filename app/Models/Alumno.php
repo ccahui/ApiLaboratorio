@@ -19,8 +19,13 @@ class Alumno extends Model
         // Relacion de 1 --> * (Inverso)
         return $this->belongsTo(Grupo::class,'grupo_id');
     }
+
     public static function findByGmail($gmail){
         return static::where('gmail',$gmail)->first();
+    }
+
+    public function cursos(){
+        return $this->belongsToMany(Curso::class,'matriculas')->using(Matricula::class)->withPivot('id','periodo_id','laboratorio_id');
     }
 }
 

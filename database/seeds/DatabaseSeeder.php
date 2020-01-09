@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             'cursos',
             'grupos',
             'alumnos',
-            'laboratorios'
+            'laboratorios',
+            'matriculas'
         ]);
 
         $this->call(ProfesorTableSeeder::class);
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GrupoTableSeeder::class);
         $this->call(AlumnoTableSeeder::class);
         $this->call(LaboratorioTableSeeder::class);
+        $this->call(MatriculaTableSeeder::class);
     }
 
     private function eliminarDatosDeLasTablas(array $tablas){
