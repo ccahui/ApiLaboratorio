@@ -7,7 +7,12 @@ use Faker\Generator as Faker;
 use App\Models\Grupo;
 $factory->define(Alumno::class, function (Faker $faker) {
     if(Grupo::all()->count() == 0) {
-        factory(Grupo::class)->create();
+        Grupo::create([
+            'numero' => 1,
+            'descripcion' => 'Grupo 1',
+            'fechaInicio'=> now(),
+            'fechaFin'=> now(),
+            ]);
     }
     return [
         'nombre'=> $faker->name,

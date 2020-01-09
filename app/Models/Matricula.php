@@ -12,10 +12,12 @@ class Matricula extends Pivot
     protected $table = "matriculas";
 
     public function curso() {
+        // Relacion de * --> *
         return $this->belongsTo(Curso::class,'curso_id');
       }
     
-      public function alumno() {
+    public function alumno() {
+          // Relacion de * --> *
           return $this->belongsTo(Alumno::class,'alumno_id');
-      }
+    }
 }

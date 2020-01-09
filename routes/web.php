@@ -10,7 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Http\Resources\AlumnoCollection;
+use App\Models\Alumno;
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/alumnos', function () {
+    return new AlumnoCollection(Alumno::all());
 });
