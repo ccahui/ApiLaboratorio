@@ -14,5 +14,14 @@ class Laboratorio extends Model
         // Relacion de 1 --> * (Inverso)
         return $this->belongsTo(Curso::class,'curso_id');
     }
+
+    public function profesor(){
+        // Relacion de 1 --> * (Inverso)
+        return $this->belongsTo(Profesor::class,'profesor_id');
+    }
+
+    public function alumnos(){
+        return $this->belongsToMany(Alumno::class,'matriculas')->using(Matricula::class)->withPivot('id');
+    }
     
 }

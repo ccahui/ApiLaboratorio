@@ -27,5 +27,7 @@ class Alumno extends Model
     public function cursos(){
         return $this->belongsToMany(Curso::class,'matriculas')->using(Matricula::class)->withPivot('id','periodo_id','laboratorio_id');
     }
+    
+
 }
 
