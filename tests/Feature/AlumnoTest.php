@@ -18,6 +18,12 @@ class AlumnoTest extends TestCase
         ]);
         $response = $this->get("/alumnos");
         $response->assertStatus(200)
-        ->assertSee($alumno->nombre);
+        ->assertSee($alumno->nombre)
+        ->assertSee('id')
+        ->assertSee('nombre')
+        ->assertSee('apellido')
+        ->assertSee('cui')
+        ->assertSee('autorizacion');
+
     }
 }

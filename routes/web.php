@@ -16,5 +16,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/alumnos', function () {
-    return new AlumnoCollection(Alumno::all());
+    return new AlumnoCollection(Alumno::paginate());
 });

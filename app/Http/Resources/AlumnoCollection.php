@@ -6,16 +6,10 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class AlumnoCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
+    public $collects = 'App\Http\Resources\Member';
+    
     public function toArray($request)
     {
-        return [
-            'alumnos' => $this->collection,
-        ];
+        return $this->collection;
     }
 }
