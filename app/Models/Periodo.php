@@ -8,7 +8,7 @@ class Periodo extends Model
 {
     protected $table = 'periodos';
     protected $fillable = [
-        'anio', 'semestre'
+        'año', 'semestre'
     ];
 }
 

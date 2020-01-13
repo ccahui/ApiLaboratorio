@@ -15,7 +15,7 @@ class CreatePeriodoTable extends Migration
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->year('anio');
+            $table->year('año');
             $table->enum('semestre',['A','B']);
             $table->timestamps();
         });

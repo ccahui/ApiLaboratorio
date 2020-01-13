@@ -12,14 +12,14 @@ class PeriodoTableSeeder extends Seeder
     
     private function insertarPeriodos() {
        
-        $anio = $this->getCurrentYear();
+        $year = $this->getCurrentYear();
         Periodo::create([
-            'anio' => $anio,
+            'año' => $year,
             'semestre' => 'A',
         ]);
        
         Periodo::create([
-            'anio' => $anio,
+            'año' => $year,
             'semestre' => 'B',
         ]);
     }
