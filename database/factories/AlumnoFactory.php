@@ -16,7 +16,7 @@ $factory->define(Alumno::class, function (Faker $faker) {
     }
     return [
         'nombre'=> $faker->name,
-        'cui'=>$faker->numberBetween($inicio = 2015000, $fin=2020000),
+        'cui'=>$faker->numberBetween($inicio = 20150000, $fin=20200000),
         'apellido'=>$faker->lexify('????? ????'),
         'gmail' => $faker->unique()->safeEmail,
         'grupo_id' => Grupo::all()->random()->id,

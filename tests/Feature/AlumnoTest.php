@@ -14,7 +14,7 @@ class AlumnoTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testListadoAlumnos()
+    public function testListado()
     {
         $nombre = 'Juan';
         $alumno = factory(Alumno::class)->create([
@@ -22,16 +22,13 @@ class AlumnoTest extends TestCase
         ]);
 
         $response = $this->get("/alumnos");
+
         $response->assertStatus(200)
-        ->assertSee($alumno->nombre)
-        ->assertSee('id')
-        ->assertSee('nombre')
-        ->assertSee('apellido')
-        ->assertSee('cui')
-        ->assertSee('autorizacion');
+        ->assertSee($alumno->nombre);
+        $this->assertSeeKeysEsperados($response);
     }
 
-    public function testShowAlumnoById()
+    public function testShowById()
     {
         $nombre = 'Juan';
         $alumno = factory(Alumno::class)->create([
@@ -40,21 +37,26 @@ class AlumnoTest extends TestCase
 
         $response = $this->get("/alumnos/{$alumno->id}");
         $response->assertStatus(200)
-        ->assertSee($alumno->nombre)
-        ->assertSee('id')
-        ->assertSee('nombre')
-        ->assertSee('apellido')
-        ->assertSee('cui')
-        ->assertSee('autorizacion');
+        ->assertSee($alumno->nombre);
+
+        $this->assertSeeKeysEsperados($response);
     }
 
-    public function testStoreAlumno()
+    public function testShowByIdNotFound()
+    {
+        $id = 5;
+        $response = $this->get("/alumnos/{$id}");
+        $response->assertStatus(404)
+        ->assertSee('ok')
+        ->assertSee('false');
+    }
+
+    public function testStore()
     {
         $nombre = 'Juan';
         $alumno = factory(Alumno::class)->make([
             'nombre' => $nombre,
         ]);
-        
         
         $request = [
             'nombre' => $alumno->nombre,
@@ -70,13 +72,36 @@ class AlumnoTest extends TestCase
             'nombre'=> $alumno->nombre,
         ]);
 
-        $response->assertStatus(201)
-        ->assertSee($alumno->nombre)
-        ->assertSee('id')
-        ->assertSee('nombre')
-        ->assertSee('apellido')
+        $response->assertStatus(201);
+        $this->assertSeeKeysEsperados($response);
+    }
+
+    public function testStoreCuiNoValidate()
+    {
+        $cui = '2015093';
+        $alumno = factory(Alumno::class)->make([
+            'cui' => $cui,
+        ]);
+        
+        $request = [
+            'nombre'=>$alumno->nombre,
+            'apellido' => $alumno->apellido,
+            'grupo_id' => $alumno->grupo_id,
+            'gmail'=> $alumno->gmail,
+            'cui'=> $cui,
+        ];
+
+        $response = $this->post("/alumnos", $request);
+
+        $this->assertDatabaseMissing('alumnos',[
+            'cui'=> $alumno->cui,
+        ]);
+
+        $response->assertStatus(404)
+        ->assertSee('ok')
+        ->assertSee('false')
         ->assertSee('cui')
-        ->assertSee('autorizacion');
+        ->assertSee('Validation Error');
     }
 
     public function testUpdateAlumno()
@@ -86,25 +111,42 @@ class AlumnoTest extends TestCase
 
         $request = [
             'nombre' => $nuevoNombre,
-            'apellido' => $alumno->apellido,
-            'grupo_id' => $alumno->grupo_id,
-            'gmail'=> $alumno->gmail,
-            'cui'=> $alumno->cui,
+            'autorizacion'=>true,
+            'matriculado'=>true
         ];
 
         $response = $this->put("/alumnos/{$alumno->id}", $request);
 
         $this->assertDatabaseHas('alumnos',[
             'nombre'=> $nuevoNombre,
+            'autorizacion'=> true,
+            'matriculado'=> true
         ]);
 
         $response->assertStatus(200)
-        ->assertSee($nuevoNombre)
-        ->assertSee('id')
-        ->assertSee('nombre')
-        ->assertSee('apellido')
-        ->assertSee('cui')
-        ->assertSee('autorizacion');
+                 ->assertSee($nuevoNombre);
+        $this->assertSeeKeysEsperados($response);
+    }
+
+
+    public function testUpdateEmailRequired()
+    {
+        $alumno = factory(Alumno::class)->create();
+        $gmail = '';
+
+        $request = [
+            'gmail'=> $gmail
+        ];
+        $response = $this->put("/alumnos/{$alumno->id}", $request);
+
+        $this->assertDatabaseHas('alumnos',[
+            'gmail'=> $alumno->gmail,
+        ]);
+        $response->assertStatus(404)
+                    ->assertSee('ok')
+                    ->assertSee('false')         
+                    ->assertSee('gmail')
+                    ->assertSee('Validation Error');
     }
 
     public function testDestroyAlumno()
@@ -121,14 +163,30 @@ class AlumnoTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-        ->assertSee($nombre)
-        ->assertSee('id')
+        ->assertSee($nombre);
+        $this->assertSeeKeysEsperados($response);
+    }
+
+    public function testDestroyAlumnoNotFound()
+    {
+        $id = 5;
+        $response = $this->delete("/alumnos/{$id}");
+
+        $response->assertStatus(404)
+        ->assertSee('ok')
+        ->assertSee('false');
+        
+    }
+
+    private function assertSeeKeysEsperados($response) {
+        $response->assertSee('id')
         ->assertSee('nombre')
         ->assertSee('apellido')
         ->assertSee('cui')
-        ->assertSee('autorizacion');
+        ->assertSee('gmail')
+        ->assertSee('autorizacion')
+        ->assertSee('matriculado');
     }
-
     
 
 

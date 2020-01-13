@@ -20,7 +20,9 @@ class AlumnoResource extends JsonResource
             'nombre' => $this->nombre,
             'apellido' => $this->apellido,
             'cui' => $this->cui,
-            'autorizacion'=> $this->autorizacion
+            'gmail'=>$this->gmail,
+            'autorizacion'=> $this->autorizacion,
+            'matriculado'=>$this->matriculado
         ];
     }
 }
