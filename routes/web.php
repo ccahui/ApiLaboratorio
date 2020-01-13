@@ -15,3 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::apiResource('alumnos','API\AlumnoController');
+Route::apiResource('profesores','API\ProfesorController');
+
