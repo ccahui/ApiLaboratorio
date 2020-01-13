@@ -28,4 +28,11 @@ class BaseTest extends TestCase
             ->assertJson(['ok' => false]);
     }
 
+    public function apiUrl($id = null){
+        if($id === null){
+            return $this->url;
+        }
+        else return "{$this->url}/{$id}";
+    }
+
 }

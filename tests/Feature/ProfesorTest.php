@@ -18,7 +18,7 @@ class ProfesorTest extends BaseTest
     public $url = '/profesores';
 
     /*TODO*/
-    public function test_obtener_listado()
+    public function xtest_obtener_listado()
     {
         $profesores = factory(Profesor::class, 2)->create(); 
         $keys = $this->keys;
@@ -33,7 +33,7 @@ class ProfesorTest extends BaseTest
         $response->assertJson(['data' => $data]);
     }
 
-    public function test_obtener_por_id()
+    public function xtest_obtener_por_id()
     {
         $profesor = factory(Profesor::class)->create()->refresh();
         $data = $profesor->only($this->keys);       
@@ -43,7 +43,7 @@ class ProfesorTest extends BaseTest
         $response->assertJson(['data' => $data]);
     }
 
-    public function test_obtener_error_id_not_found()
+    public function xtest_obtener_error_id_not_found()
     {
         $id = 1;
         $response = $this->get($this->apiUrl($id));
@@ -51,7 +51,7 @@ class ProfesorTest extends BaseTest
         $this->assertError($response);
     }
 
-    public function test_crear()
+    public function xtest_crear()
     {
         $profesor = factory(Profesor::class)->make();   
         $request = [
@@ -69,7 +69,7 @@ class ProfesorTest extends BaseTest
         
     }
 
-    public function test_gmail_required_validacion_para_crear()
+    public function xtest_gmail_required_validacion_para_crear()
     {
         
         $profesor = factory(Profesor::class)->make(['gmail' => '']);
@@ -88,7 +88,7 @@ class ProfesorTest extends BaseTest
         $response->assertSee('The gmail field is required.');
     }
 
-    public function test_actualizar_nombre()
+    public function xtest_actualizar_nombre()
     {
         $nuevoNombre = 'Juan Marcos';
         $profesor = factory(Profesor::class)->create();
@@ -105,7 +105,7 @@ class ProfesorTest extends BaseTest
         $response->assertJson(['data' => $data]);                
     }
 
-    public function test_gmail_required_validacion_para_actualizar()
+    public function xtest_gmail_required_validacion_para_actualizar()
     {
         $profesor = factory(Profesor::class)->create();
         $request = ['gmail'=> ''];
@@ -118,7 +118,7 @@ class ProfesorTest extends BaseTest
 
     }
 
-    public function test_eliminar_por_id()
+    public function xtest_eliminar_por_id()
     {
         $profesor = factory(Profesor::class)->create();
         $data = $profesor->refresh()->only($this->keys);
@@ -133,18 +133,12 @@ class ProfesorTest extends BaseTest
         
     }
 
-    public function test_eliminar_por_id_not_found()
+    public function xtest_eliminar_por_id_not_found()
     {
         $id = 1;
         $response = $this->delete($this->apiUrl($id));
 
         $this->assertError($response);
     }
-    
-    public function apiUrl($id = null){
-        if($id === null){
-            return $this->url;
-        }
-        else return "{$this->url}/{$id}";
-    }
+
 }

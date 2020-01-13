@@ -14,7 +14,9 @@ class AlumnoTest extends BaseTest
 {
     
     public $keys = ['nombre','apellido','gmail','autorizacion','matriculado','cui'];
-    
+    public $table = 'alumnos';
+    public $url = '/alumnos';
+
     /*TODO*/
     public function test_obtener_listado()
     {
@@ -25,7 +27,7 @@ class AlumnoTest extends BaseTest
                 return $alumno->refresh()->only($keys);
              })->toArray();
         
-        $response = $this->get("/alumnos");
+        $response = $this->get($this->apiUrl());
         
         $this->assertSuccess($response);
         $response->assertJson(['data' => $data]);
@@ -36,7 +38,7 @@ class AlumnoTest extends BaseTest
         $alumno = factory(Alumno::class)->create()->refresh();
         $data = $alumno->only($this->keys);   
         
-        $response = $this->get("/alumnos/{$alumno->id}");
+        $response = $this->get($this->apiUrl($alumno->id));
        
         $this->assertSuccess($response);
         $response->assertJson(['data' => $data]);
@@ -45,7 +47,7 @@ class AlumnoTest extends BaseTest
     public function test_obtener_error_id_not_found()
     {
         $id = 1;
-        $response = $this->get("/alumnos/{$id}");
+        $response = $this->get($this->apiUrl($id));
         
         $this->assertError($response);
     }
@@ -61,9 +63,9 @@ class AlumnoTest extends BaseTest
             'cui'=> $alumno->cui,
         ];
 
-        $response = $this->post("/alumnos", $request);
+        $response = $this->post($this->apiUrl(), $request);
 
-        $this->assertDatabaseHas('alumnos', ['gmail'=> $alumno->gmail]);
+        $this->assertDatabaseHas($this->table, ['gmail'=> $alumno->gmail]);
         
         $this->assertSuccess($response, 201);
         
@@ -82,7 +84,7 @@ class AlumnoTest extends BaseTest
             'cui'=> $alumno->cui,
         ];
 
-        $response = $this->post("/alumnos", $request);
+        $response = $this->post($this->apiUrl(), $request);
 
         $this->assertError($response);
         $response->assertJson([ 'message'=>'Validation Error.']);
@@ -96,9 +98,9 @@ class AlumnoTest extends BaseTest
 
         $request = ['nombre' => $nuevoNombre];
 
-        $response = $this->put("/alumnos/{$alumno->id}", $request);
+        $response = $this->put($this->apiUrl($alumno->id), $request);
 
-        $this->assertDatabaseHas('alumnos', ['nombre'=> $nuevoNombre]);
+        $this->assertDatabaseHas($this->table, ['nombre'=> $nuevoNombre]);
 
         $data = Alumno::find($alumno->id)->only($this->keys);
         
@@ -111,7 +113,7 @@ class AlumnoTest extends BaseTest
         $alumno = factory(Alumno::class)->create();
         $request = ['gmail'=> ''];
 
-        $response = $this->put("/alumnos/{$alumno->id}", $request);
+        $response = $this->put($this->apiUrl($alumno->id), $request);
         
         $this->assertError($response);
         $response->assertJson(['message' => 'Validation Error.']);
@@ -124,8 +126,8 @@ class AlumnoTest extends BaseTest
         $alumno = factory(Alumno::class)->create();
         $data = $alumno->refresh()->only($this->keys);
 
-        $response = $this->delete("/alumnos/{$alumno->id}");
-        $this->assertDatabaseMissing('alumnos',[
+        $response = $this->delete($this->apiUrl($alumno->id));
+        $this->assertDatabaseMissing($this->table,[
             'id'=> $alumno->id
         ]);
 
@@ -137,7 +139,7 @@ class AlumnoTest extends BaseTest
     public function test_eliminar_por_id_not_found()
     {
         $id = 1;
-        $response = $this->delete("/alumnos/{$id}");
+        $response = $this->delete($this->apiUrl($id));
 
         $this->assertError($response);
     }
