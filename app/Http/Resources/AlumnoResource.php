@@ -22,7 +22,8 @@ class AlumnoResource extends JsonResource
             'cui' => $this->cui,
             'gmail'=>$this->gmail,
             'autorizacion'=> $this->autorizacion,
-            'matriculado'=>$this->matriculado
+            'matriculado'=>$this->matriculado,
+            'grupo'=>new GrupoResource($this->grupo)
         ];
     }
 }
