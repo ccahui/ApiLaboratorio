@@ -11,6 +11,10 @@ class Curso extends Model
         'nombre', 'codigo','tieneLab'
     ];
 
+    protected $casts = [
+        'tieneLab' => 'boolean',
+    ];
+
     public function laboratorios(){
         return $this->hasMany(Laboratorio::class,'curso_id');
     }
