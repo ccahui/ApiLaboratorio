@@ -22,7 +22,7 @@ class CreateLaboratorioTable extends Migration
             $table->unsignedBigInteger('curso_id');
             $table->foreign('curso_id')
                 ->references('id')->on('cursos')
-                ->onDelealumnote('cascade');
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('profesor_id')->nullable();
             $table->foreign('profesor_id')
