@@ -5,12 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Profesor;
-use App\Http\Resources\ProfesorCollection;
-use App\Http\Resources\ProfesorResource;
+use App\Models\Curso;
+use App\Http\Resources\CursoCollection;
+use App\Http\Resources\CursoResource;
 use Validator;
 
-class ProfesorController extends BaseController
+class CursoController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class ProfesorController extends BaseController
      */
     public function index(Request $request)
     {
-      $profesores = new ProfesorCollection(Profesor::paginate());
-      return $profesores;
+      $cursos = new CursoCollection(Curso::paginate());
+      return $cursos;
     }
 
     /**
@@ -31,10 +31,10 @@ class ProfesorController extends BaseController
      */
     public function store(Request $request)
     {
+        $sizeCodigoCurso = 5;
         $rules =  [
             'nombre'=>'required',
-            'apellido'=>'required',
-            'gmail'=>'required | email | unique:profesores'
+            'codigo'=>"required | size:{$sizeCodigoCurso} | unique:cursos",
         ];
         $input = $request->all();
 
@@ -43,10 +43,10 @@ class ProfesorController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
 
-        $profesor = Profesor::create($input)->refresh();
-        $data = new ProfesorResource($profesor);
+        $curso = Curso::create($input)->refresh();
+        $data = new CursoResource($curso);
         
-        return $this->sendResponse($data, 'Profesor created successfully', 201);
+        return $this->sendResponse($data, 'Curso created successfully', 201);
     }
 
     /**
@@ -57,12 +57,12 @@ class ProfesorController extends BaseController
      */
     public function show($id)
     {
-        $profesor = Profesor::find($id);
-        if($profesor == null ){
-            return $this->sendError('Profesor not found');
+        $curso = Curso::find($id);
+        if($curso == null ){
+            return $this->sendError('Curso not found');
         }
-        $data = new ProfesorResource($profesor);
-        return $this->sendResponse($data, 'Profesor retrieved successfully.');
+        $data = new CursoResource($curso);
+        return $this->sendResponse($data, 'Curso retrieved successfully.');
     }
 
     /**
@@ -75,15 +75,15 @@ class ProfesorController extends BaseController
     //**TODO */
     public function update(Request $request, $id)
     {
-        $profesor = Profesor::find($id);
-        if($profesor == null ){
-            return $this->sendError('Profesor not found');
+        $curso = Curso::find($id);
+        if($curso == null ){
+            return $this->sendError('Curso not found');
         }
 
+        $sizeCodigoCurso = 5;
         $rules =  [
             'nombre'=>'sometimes | required',
-            'apellido'=>'sometimes | required',
-            'gmail'=>'sometimes | required | email |unique:profesores,gmail,'.$profesor->id, 
+            'codigo'=>"sometimes | required | size:{$sizeCodigoCurso} | unique:cursos,codigo".$curso->id,
         ];
         
         $input = $request->all();
@@ -93,10 +93,10 @@ class ProfesorController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
       
-        $profesor->update($input);
-        $data = new ProfesorResource($profesor);
+        $curso->update($input);
+        $data = new CursoResource($curso);
 
-        return $this->sendResponse($data, 'Profesor updated successfully.');
+        return $this->sendResponse($data, 'Curso updated successfully.');
     }
 
     /**
@@ -107,14 +107,14 @@ class ProfesorController extends BaseController
      */
     public function destroy($id)
     {
-        $profesor = Profesor::find($id);
-        if($profesor == null ){
-            return $this->sendError('Profesor not found');
+        $curso = Curso::find($id);
+        if($curso == null ){
+            return $this->sendError('Curso not found');
         }
 
-        $profesor->delete();
+        $curso->delete();
         
-        $data = new ProfesorResource($profesor);
-        return $this->sendResponse($data,'Profesor deleted successfully.');
+        $data = new CursoResource($curso);
+        return $this->sendResponse($data,'Curso deleted successfully.');
     }
 }

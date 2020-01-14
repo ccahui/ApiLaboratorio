@@ -13,11 +13,11 @@ use App\Models\Curso;
 class CursoTest extends BaseTest
 {
     
-    public $keys = ['nombre','codigo','tieneLab'];
+    public $keys = ['nombre','codigo','tieneLab','created_at','updated_at'];
     public $table = 'cursos';
     public $url = '/cursos';
 
-    /*TODO*/
+    /*TODO */
     public function test_obtener_listado()
     {
         $cursos = factory(Curso::class, 2)->create(); 
@@ -26,7 +26,7 @@ class CursoTest extends BaseTest
         $data = $cursos->map( function ($curso) use ($keys){
                 return $curso->refresh()->only($keys);
              })->toArray();
-        
+       // dd(json_encode($data));
         $response = $this->get($this->apiUrl());
         
         $this->assertSuccess($response);
