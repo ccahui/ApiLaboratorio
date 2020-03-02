@@ -43,7 +43,7 @@ class AlumnoController extends BaseController
 
         $validator = Validator::make($input, $rules);
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
 
         $alumno = Alumno::create($input)->refresh();
@@ -88,14 +88,14 @@ class AlumnoController extends BaseController
             'nombre'=>'sometimes | required',
             'apellido'=>'sometimes | required',
             'gmail'=>'sometimes | required | email |unique:alumnos,gmail,'.$alumno->id, 
-            'cui'=>"sometimes | required | size:{$sizeCui} | unique:alumnos".$alumno->id,
+            'cui'=>"sometimes | required | size:{$sizeCui} | unique:alumnos,cui,".$alumno->id,
             'grupo_id'=>'sometimes | nullable | exists:grupos,id'
         ];
         $input = $request->all();
         $validator = Validator::make($input, $rules);
         
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
       
         $alumno->update($input);

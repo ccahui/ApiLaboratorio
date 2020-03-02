@@ -40,7 +40,7 @@ class ProfesorController extends BaseController
 
         $validator = Validator::make($input, $rules);
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
 
         $profesor = Profesor::create($input)->refresh();
@@ -90,7 +90,7 @@ class ProfesorController extends BaseController
         $validator = Validator::make($input, $rules);
         
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
       
         $profesor->update($input);

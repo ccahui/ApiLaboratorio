@@ -40,7 +40,7 @@ class CursoController extends BaseController
 
         $validator = Validator::make($input, $rules);
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
 
         $curso = Curso::create($input)->refresh();
@@ -83,14 +83,14 @@ class CursoController extends BaseController
         $sizeCodigoCurso = 5;
         $rules =  [
             'nombre'=>'sometimes | required',
-            'codigo'=>"sometimes | required | size:{$sizeCodigoCurso} | unique:cursos,codigo".$curso->id,
+            'codigo'=>"sometimes | required | size:{$sizeCodigoCurso} | unique:cursos,codigo,".$curso->id,
         ];
         
         $input = $request->all();
         $validator = Validator::make($input, $rules);
         
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
+            return $this->sendError('Validation Error.', $validator->errors(), 400);       
         }
       
         $curso->update($input);
