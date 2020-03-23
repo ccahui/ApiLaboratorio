@@ -34,7 +34,7 @@ class CursoController extends BaseController
         $sizeCodigoCurso = 5;
         $rules =  [
             'nombre'=>'required',
-            'codigo'=>"required | size:{$sizeCodigoCurso} | unique:cursos",
+            'codigo'=>"required | digits:{$sizeCodigoCurso} | unique:cursos",
         ];
         $input = $request->all();
 
@@ -83,7 +83,7 @@ class CursoController extends BaseController
         $sizeCodigoCurso = 5;
         $rules =  [
             'nombre'=>'sometimes | required',
-            'codigo'=>"sometimes | required | size:{$sizeCodigoCurso} | unique:cursos,codigo,".$curso->id,
+            'codigo'=>"sometimes | required | digits:{$sizeCodigoCurso} | unique:cursos,codigo,".$curso->id,
         ];
         
         $input = $request->all();

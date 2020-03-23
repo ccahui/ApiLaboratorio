@@ -18,4 +18,5 @@ Route::apiResource('alumnos','API\AlumnoController');
 Route::apiResource('profesores','API\ProfesorController');
 Route::apiResource('cursos','API\CursoController');
 Route::apiResource('grupos','API\GrupoController');
+Route::apiResource('laboratorios','API\LaboratorioController');
 

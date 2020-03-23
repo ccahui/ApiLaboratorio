@@ -22,17 +22,18 @@ class AlumnoTest extends BaseTest
     {
         $alumnos = factory(Alumno::class, 2)->create(); 
         $keys = $this->keys;
-
         $data = $alumnos->map( function ($alumno) use ($keys){
                 return $alumno->refresh()->only($keys);
              })->toArray();
         
+        
         $response = $this->get($this->apiUrl());
+
         
         $this->assertSuccess($response);
         $response->assertJson(['data' => $data]);
     }
-
+/*
     public function test_obtener_por_id()
     {
         $alumno = factory(Alumno::class)->create()->refresh();
@@ -143,5 +144,5 @@ class AlumnoTest extends BaseTest
 
         $this->assertError($response);
     }
-
+*/
 }

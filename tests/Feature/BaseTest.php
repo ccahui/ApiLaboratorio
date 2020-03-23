@@ -13,8 +13,8 @@ use Tests\TestCase;
 class BaseTest extends TestCase
 {
     
-   use DatabaseTransactions;
- //  use RefreshDatabase;
+    use DatabaseTransactions;
+    //use RefreshDatabase;
     public function test_basic_test(){
         $response = $this->get('/');
         $response->assertStatus(200);

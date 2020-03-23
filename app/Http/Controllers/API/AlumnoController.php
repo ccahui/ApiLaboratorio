@@ -36,7 +36,7 @@ class AlumnoController extends BaseController
             'nombre'=>'required',
             'apellido'=>'required',
             'gmail'=>'required | email | unique:alumnos',
-            'cui'=>"required | size:{$sizeCui} | unique:alumnos",
+            'cui'=>"required | digits:{$sizeCui} | unique:alumnos",
             'grupo_id'=>'nullable | exists:grupos,id'
         ];
         $input = $request->all();
@@ -88,7 +88,7 @@ class AlumnoController extends BaseController
             'nombre'=>'sometimes | required',
             'apellido'=>'sometimes | required',
             'gmail'=>'sometimes | required | email |unique:alumnos,gmail,'.$alumno->id, 
-            'cui'=>"sometimes | required | size:{$sizeCui} | unique:alumnos,cui,".$alumno->id,
+            'cui'=>"sometimes | required | digits:{$sizeCui} | unique:alumnos,cui,".$alumno->id,
             'grupo_id'=>'sometimes | nullable | exists:grupos,id'
         ];
         $input = $request->all();
