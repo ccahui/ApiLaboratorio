@@ -33,7 +33,7 @@ class AlumnoTest extends BaseTest
         $this->assertSuccess($response);
         $response->assertJson(['data' => $data]);
     }
-/*
+
     public function test_obtener_por_id()
     {
         $alumno = factory(Alumno::class)->create()->refresh();
@@ -144,5 +144,4 @@ class AlumnoTest extends BaseTest
 
         $this->assertError($response);
     }
-*/
 }

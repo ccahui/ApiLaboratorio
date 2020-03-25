@@ -20,4 +20,9 @@ class Matricula extends Pivot
           // Relacion de * --> *
           return $this->belongsTo(Alumno::class,'alumno_id');
     }
+    /*TODO */
+    public function laboratorio(){
+      // Relacion de 1 --> * (Inverso)
+      return $this->belongsTo(Laboratorio::class,'laboratorio_id');
+  }
 }

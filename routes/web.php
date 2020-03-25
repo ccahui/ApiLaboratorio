@@ -11,12 +11,16 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/laboratorios/{id}/alumnos', 'LaboratorioController@alumnos');
 Route::apiResource('alumnos','API\AlumnoController');
 Route::apiResource('profesores','API\ProfesorController');
 Route::apiResource('cursos','API\CursoController');
 Route::apiResource('grupos','API\GrupoController');
 Route::apiResource('laboratorios','API\LaboratorioController');
+Route::apiResource('matriculas','API\MatriculaController');
 

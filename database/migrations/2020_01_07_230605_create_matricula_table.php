@@ -39,7 +39,7 @@ class CreateMatriculaTable extends Migration
                         ->references('id')->on('laboratorios')
                         ->onDelete('set null');
         
-            $table->unique(['alumno_id', 'curso_id','periodo_id']);
+            $table->unique(['alumno_id', 'curso_id']);
                     
         });
     }
