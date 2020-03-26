@@ -17,6 +17,10 @@ Route::get('/', function () {
 });
 
 Route::get('/laboratorios/{id}/alumnos', 'LaboratorioController@alumnos');
+Route::get('/profesores/{id}/laboratorios', 'ProfesorController@laboratorios');
+Route::get('/alumnos/{id}/laboratorios', 'AlumnoController@laboratorios');
+Route::get('/cursos/{id}/laboratorios', 'CursoController@laboratorios');
+
 Route::apiResource('alumnos','API\AlumnoController');
 Route::apiResource('profesores','API\ProfesorController');
 Route::apiResource('cursos','API\CursoController');

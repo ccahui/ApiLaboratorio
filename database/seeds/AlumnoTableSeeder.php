@@ -6,7 +6,7 @@ class AlumnoTableSeeder extends Seeder
 {
     public function run()
     {
-        $this -> insertarAlumnos(20);
+        $this -> insertarAlumnos(500);
     }
     
     private function insertarAlumnos($cantidad) {

@@ -28,9 +28,10 @@ class LaboratorioController extends BaseController
         }
 
         $data = $this->alumnosMatriculados($laboratorio);
-        return $this->sendResponse($data,'Matriculados en Laboratorio retrieved successfully');
+        return $this->sendResponse($data,'Alumnos matriculados en un Laboratorio retrieved successfully');
     }
 
+    /**TODO pivot */
     private function alumnosMatriculados($laboratorio){
         $curso = $laboratorio->curso;
         $alumnosMatriculados = $curso->alumnos()->where('laboratorio_id', $laboratorio->id)->get();

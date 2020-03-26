@@ -21,7 +21,8 @@ class LaboratorioTableSeeder extends Seeder
         foreach($cursos as $curso){
             $curso->laboratorios()->createMany([
                 $this->crearLaboratorio('A'),
-                $this->crearLaboratorio('B')
+                $this->crearLaboratorio('B'),
+                $this->crearLaboratorio('C')
              ]);
         }
     }

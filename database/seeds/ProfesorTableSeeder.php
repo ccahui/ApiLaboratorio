@@ -7,7 +7,7 @@ class ProfesorTableSeeder extends Seeder
 
     public function run()
     {
-        $this -> insertarProfesores(5);
+        $this -> insertarProfesores(40);
     }
     
     private function insertarProfesores($cantidad) {

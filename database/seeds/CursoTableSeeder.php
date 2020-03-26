@@ -11,7 +11,7 @@ class CursoTableSeeder extends Seeder
      */
     public function run()
     {
-        $this -> insertarCursos(10);
+        $this -> insertarCursos(25);
     }
     
     private function insertarCursos($cantidad) {

@@ -14,9 +14,15 @@ $factory->define(Alumno::class, function (Faker $faker) {
             'fechaFin'=> now(),
             ]);
     }
+    /**TODO doWhile generar un CUI UNIQUE*/
+    $cui = $faker->numberBetween($inicio = 20150000, $fin=20200000);
+    while(Alumno::where('cui',$cui)->count()){
+        $cui = $faker->numberBetween($inicio = 20150000, $fin=20200000);
+    }
+    
     return [
         'nombre'=> $faker->name,
-        'cui'=>$faker->numberBetween($inicio = 20150000, $fin=20200000),
+        'cui'=>$cui,
         'apellido'=>$faker->lexify('????? ????'),
         'gmail' => $faker->unique()->safeEmail,
         'grupo_id' => Grupo::all()->random()->id,
