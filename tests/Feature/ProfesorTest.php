@@ -83,7 +83,7 @@ class ProfesorTest extends BaseTest
 
         $response = $this->post($this->apiUrl(), $request);
 
-        $this->assertError($response);
+        $this->assertError($response, 400);
         $response->assertJson([ 'message'=>'Validation Error.']);
         $response->assertSee('The gmail field is required.');
     }
@@ -112,7 +112,7 @@ class ProfesorTest extends BaseTest
 
         $response = $this->put($this->apiUrl($profesor->id), $request);
         
-        $this->assertError($response);
+        $this->assertError($response, 400);
         $response->assertJson(['message' => 'Validation Error.']);
         $response->assertSee('The gmail field is required.');
 

@@ -13,20 +13,20 @@ use App\Models\Laboratorio;
 class LaboratorioTest extends BaseTest
 {
     
-    public $keys = ['id','cupos','grupos','curso','profesor'];
+    public $keys = ['id','cupos','grupo'];
     public $table = 'laboratorios';
     public $url = '/laboratorios';
 
     /*TODO */
     public function test_obtener_listado()
     {
-        $laboratorios = factory(Laboratorio::class, 2)->create(); 
+        $laboratorios = factory(Laboratorio::class, 1)->create(); 
         $keys = $this->keys;
 
         $data = $laboratorios->map( function ($laboratorio) use ($keys){
-                return $laboratorio->refresh()->only($keys);
-             })->toArray();
-       
+            $laboratorio = $laboratorio->refresh()->only($keys);
+            return  $laboratorio;   
+        })->toArray();  
         $response = $this->get($this->apiUrl());
         
         $this->assertSuccess($response);
@@ -84,7 +84,7 @@ class LaboratorioTest extends BaseTest
 
         $this->assertError($response, 400);
         $response->assertJson([ 'message'=>'Validation Error.']);
-        $response->assertSee('The curso_id field is required.');
+        $response->assertSee('The curso id field is required.');
     }
 
     public function test_actualizar_grupo()
