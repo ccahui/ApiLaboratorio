@@ -12,31 +12,21 @@ use Validator;
 
 class AlumnoController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
       $alumnos = new AlumnoCollection(Alumno::paginate());
       return $alumnos;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $sizeCui = 8;
+        $digits = 8;
         $rules =  [
             'nombre'=>'required',
             'apellido'=>'required',
             'gmail'=>'required | email | unique:alumnos',
-            'cui'=>"required | digits:{$sizeCui} | unique:alumnos",
+            'cui'=>"required | digits:{$digits} | unique:alumnos",
             'grupo_id'=>'nullable | exists:grupos,id'
         ];
         $input = $request->all();
@@ -52,12 +42,6 @@ class AlumnoController extends BaseController
         return $this->sendResponse($data, 'Alumno retrieved successfully', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $alumno = Alumno::find($id);
@@ -68,14 +52,7 @@ class AlumnoController extends BaseController
         return $this->sendResponse($data, 'Alumno retrieved successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    //**TODO */
+    //**TODO Validator */
     public function update(Request $request, $id)
     {
         $alumno = Alumno::find($id);
@@ -83,12 +60,12 @@ class AlumnoController extends BaseController
             return $this->sendError('Alumno not found');
         }
 
-        $sizeCui = 8;
+        $digits = 8;
         $rules =  [
             'nombre'=>'sometimes | required',
             'apellido'=>'sometimes | required',
             'gmail'=>'sometimes | required | email |unique:alumnos,gmail,'.$alumno->id, 
-            'cui'=>"sometimes | required | digits:{$sizeCui} | unique:alumnos,cui,".$alumno->id,
+            'cui'=>"sometimes | required | digits:{$digits} | unique:alumnos,cui,".$alumno->id,
             'grupo_id'=>'sometimes | nullable | exists:grupos,id'
         ];
         $input = $request->all();
@@ -104,12 +81,6 @@ class AlumnoController extends BaseController
         return $this->sendResponse($data, 'Alumno updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $alumno = Alumno::find($id);

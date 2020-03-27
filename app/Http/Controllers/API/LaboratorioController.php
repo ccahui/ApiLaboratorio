@@ -13,40 +13,27 @@ use Illuminate\Validation\Rule;
 
 class LaboratorioController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
       $laboratorios = new LaboratorioCollection(Laboratorio::paginate());
       return $laboratorios;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        
-        $sizeCui = 8;   
+           
         $curso_id = $request->curso_id; 
         $grupo = $request->grupo;
 
         $rules =  [
             'curso_id'=>'required | exists:cursos,id',
             'cupos'=> "required",
-         // TODO Validar keys 'grupo'=>'required | unique_with:laboratorios, curso_id',
-            'grupo'=>['required', 'size:1', Rule::unique('laboratorios')->where(function ($query) use ($curso_id,$grupo) {
-                return $query->where('curso_id', $curso_id)
-                ->where('grupo', $grupo);
+            //Clave compuesta curso_id y Grupo, Validacion
+            'grupo'=>['required', 'size:1', Rule::unique('laboratorios')->where(function ($query) use ($curso_id, $grupo) {
+                return $query->where('curso_id', $curso_id)->where('grupo', $grupo);
             })],    
             'profesor_id'=>'nullable | exists:profesores,id',
-            
         ];
         $input = $request->all();
 
@@ -61,12 +48,6 @@ class LaboratorioController extends BaseController
         return $this->sendResponse($data, 'Laboratorios retrieved successfully', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $laboratorio = Laboratorio::find($id);
@@ -77,13 +58,6 @@ class LaboratorioController extends BaseController
         return $this->sendResponse($data, 'Laboratorio retrieved successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     //**TODO */
     public function update(Request $request, $id)
     {
@@ -95,16 +69,15 @@ class LaboratorioController extends BaseController
         $curso_id = $laboratorio->curso_id; 
         $grupo = $request->grupo;
         $rules =  [
-            'curso_id'=>'sometimes | required',
+            'curso_id'=>'sometimes | required | exists:cursos,id',
             'cupos'=>'sometimes | required',
-            // TODO Validar keys 'grupo'=>'required | unique_with:laboratorios, curso_id,'.$laboratorio->id,
+            // Clave compuesta, curso_id y grupo, Validacion
             'grupo'=>['sometimes','required', 'size:1', Rule::unique('laboratorios')->where(function ($query) use ($curso_id,$grupo) {
-                return $query->where('curso_id', $curso_id)
-                ->where('grupo', $grupo);
+                return $query->where('curso_id', $curso_id)->where('grupo', $grupo);
             })->ignore($laboratorio->id)], 
             'profesor_id'=>'sometimes | nullable | exists:profesores,id'
         ];
-        //TODO 
+        //El curso de un Laboratorio NO ES MODIFICABLE luego de su creacion
         $input = $request->except('curso_id');
         $validator = Validator::make($input, $rules);
         
@@ -118,12 +91,6 @@ class LaboratorioController extends BaseController
         return $this->sendResponse($data, 'Laboratorio updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $laboratorio = Laboratorio::find($id);

@@ -13,27 +13,15 @@ use Illuminate\Validation\Rule;
 
 class MatriculaController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
       $matriculas = new MatriculaCollection(Matricula::paginate());
       return $matriculas;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         
-      
       /*  $rules =  [
             'curso_id'=>'required | exists:cursos,id',
             'cupos'=> "required",
@@ -58,12 +46,6 @@ class MatriculaController extends BaseController
         return $this->sendResponse($data, 'Matriculas retrieved successfully', 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $matricula = Matricula::find($id);
@@ -74,13 +56,6 @@ class MatriculaController extends BaseController
         return $this->sendResponse($data, 'Matricula retrieved successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     //**TODO */
     public function update(Request $request, $id)
     {
@@ -115,12 +90,6 @@ class MatriculaController extends BaseController
         return $this->sendResponse($data, 'Matricula updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $matricula = Matricula::find($id);
