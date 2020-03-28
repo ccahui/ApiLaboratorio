@@ -19,8 +19,31 @@ class LaboratorioResource extends JsonResource
             'id' => $this->id,
             'cupos' => $this->cupos,
             'grupo' => $this->grupo,
-            'curso' => new CursoResource($this->curso),
-            'profesor' => new ProfesorResource($this->profesor),
+            'curso' => $this->cursoResource($this->curso),
+            'profesor' =>$this->profesorResource($this->profesor),
         ];
+    }
+   
+    function cursoResource($curso){
+        if($curso == null)
+            return null;
+        else {
+            return [
+                'id'=>$curso->id,
+                'nombre'=>$curso->nombre,
+            ];
+        }
+    }
+
+    function profesorResource($profesor){
+        if($profesor == null)
+            return null;
+        else {
+            return [
+                'id'=>$profesor->id,
+                'nombre'=>$profesor->nombre,
+                'apellido'=>$profesor->apellido,
+            ];
+        }
     }
 }

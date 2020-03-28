@@ -23,7 +23,16 @@ class AlumnoResource extends JsonResource
             'gmail'=>$this->gmail,
             'autorizacion'=> $this->autorizacion,
             'matriculado'=>$this->matriculado,
-            'grupo'=>new GrupoResource($this->grupo)
-        ];
+            'grupo'=>$this->grupoResource($this->grupo)];
+    }
+    function grupoResource($grupo){
+        if($grupo == null)
+            return null;
+        else {
+            return [
+                'id'=>$grupo->id,
+                'numero'=>$grupo->numero,
+            ];
+        }
     }
 }

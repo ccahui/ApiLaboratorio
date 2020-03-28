@@ -10,16 +10,12 @@ use App\Models\Profesor;
 
 use App\Http\Resources\LaboratorioCollection;
 use App\Http\Resources\LaboratorioResource;
+use App\Http\Resources\ProfesorResource;
 use Validator;
 use Illuminate\Validation\Rule;
 
 class ProfesorController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function laboratorios(Request $request, $id)
     {
         $profesor = Profesor::find($id); 
@@ -27,8 +23,12 @@ class ProfesorController extends BaseController
         if($profesor == null ){
             return $this->sendError('Profesor not found');
         }
-
-        $data = $this->misLaboratorios($profesor);
+        $profesorResource = new ProfesorResource($profesor);
+        $laboratoriosResource = LaboratorioResource::collection($profesor->laboratorios);
+        $data = [
+            'profesor' => $profesorResource,
+            'laboratorios' => $laboratoriosResource
+        ];
         return $this->sendResponse($data,'Laboratorios de un Profesor retrieved successfully');
     }
 

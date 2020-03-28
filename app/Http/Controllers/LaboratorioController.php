@@ -14,11 +14,7 @@ use Illuminate\Validation\Rule;
 
 class LaboratorioController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function alumnos(Request $request, $id)
     {
         $laboratorio = Laboratorio::find($id); 

@@ -27,6 +27,7 @@ class LaboratorioTest extends BaseTest
             $laboratorio = $laboratorio->refresh()->only($keys);
             return  $laboratorio;   
         })->toArray();  
+
         $response = $this->get($this->apiUrl());
         
         $this->assertSuccess($response);

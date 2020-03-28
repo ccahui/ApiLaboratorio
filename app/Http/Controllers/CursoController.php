@@ -10,16 +10,13 @@ use App\Models\Curso;
 
 use App\Http\Resources\LaboratorioCollection;
 use App\Http\Resources\LaboratorioResource;
+use App\Http\Resources\CursoResource;
 use Validator;
 use Illuminate\Validation\Rule;
 
 class CursoController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function laboratorios(Request $request, $id)
     {
         $curso = Curso::find($id); 
@@ -28,7 +25,12 @@ class CursoController extends BaseController
             return $this->sendError('Curso not found');
         }
 
-        $data = $curso->laboratorios;
+        $cursoResource = new CursoResource($curso);
+        $laboratoriosResource = LaboratorioResource::collection($curso->laboratorios);
+        $data = [
+            'curso' => $cursoResource,
+            'laboratorios' => $laboratoriosResource
+        ];
         return $this->sendResponse($data,'Laboratorios de un Curso retrieved successfully');
     }
 
