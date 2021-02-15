@@ -17,6 +17,10 @@ use Illuminate\Validation\Rule;
 class CursoController extends BaseController
 {
   
+    public function index(){
+        $data = Curso::with('laboratorios')->get();
+        return $this->sendResponse($data,'Cursos con laboratorios retrieved successfully');
+    }
     public function laboratorios(Request $request, $id)
     {
         $curso = Curso::find($id); 

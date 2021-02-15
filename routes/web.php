@@ -15,6 +15,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/cursos/laboratorios', 'CursoController@index');
+
+Route::post('/alumnos/matricular', 'AlumnoController@matricular');
 
 Route::get('/laboratorios/{id}/alumnos', 'LaboratorioController@alumnos');
 Route::get('/profesores/{id}/laboratorios', 'ProfesorController@laboratorios');

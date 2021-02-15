@@ -14,8 +14,12 @@ class CursoController extends BaseController
 {
     public function index(Request $request)
     {
-      $cursos = new CursoCollection(Curso::paginate());
-      return $cursos;
+        if($request->has('page')){
+            $cursosPaginate = new CursoCollection(Curso::paginate()); 
+            return $cursosPaginate;
+        }
+        $cursos = new CursoCollection(Curso::all());
+        return $cursos;
     }
 
     public function store(Request $request)
