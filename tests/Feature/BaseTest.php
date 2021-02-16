@@ -1,6 +1,8 @@
 <?php
 
 namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,7 +15,7 @@ use Tests\TestCase;
 class BaseTest extends TestCase
 {
     
-    use DatabaseTransactions;
+    use DatabaseMigrations;
     //use RefreshDatabase;
     public function test_basic_test(){
         $response = $this->get('/');
