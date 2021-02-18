@@ -104,6 +104,17 @@ class CursoTest extends BaseTest
         $response->assertJson(['data' => $data]);                
     }
 
+    public function test_actualizar_id_not_found()
+    {
+        $id = 1;
+        $nuevoNombre = 'Matematica';
+
+        $request = ['nombre' => $nuevoNombre];
+
+        $response = $this->put($this->apiUrl($id), $request);
+        
+        $this->assertError($response);              
+    }
     public function test_nombre_required_validacion_para_actualizar()
     {
         $curso = factory(Curso::class)->create();

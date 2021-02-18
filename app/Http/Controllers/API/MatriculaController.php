@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Matricula;
 use App\Http\Resources\MatriculaCollection;
 use App\Http\Resources\MatriculaResource;
-use Validator;
-use Illuminate\Validation\Rule;
+
 
 class MatriculaController extends BaseController
 {

@@ -8,14 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Matricula;
 use App\Models\Alumno;
 
-use App\Http\Resources\MatriculaCollection;
-use App\Http\Resources\MatriculaResource;
 use App\Http\Resources\LaboratorioResource;
 use App\Http\Resources\AlumnoResource;
-use App\Http\Resources\CursoCollection;
-use App\Http\Resources\CursoResource;
-use Validator;
-use Illuminate\Validation\Rule;
+
 
 class AlumnoController extends BaseController
 {

@@ -105,6 +105,19 @@ class ProfesorTest extends BaseTest
         $response->assertJson(['data' => $data]);                
     }
 
+    public function test_actualizar_id_not_found()
+    {
+        $id = 1;
+        $nuevoNombre = 'Juan Marcos';
+
+        $request = ['nombre' => $nuevoNombre];
+
+        $response = $this->put($this->apiUrl($id), $request);
+
+        $this->assertError($response);
+                
+    }
+
     public function test_gmail_required_validacion_para_actualizar()
     {
         $profesor = factory(Profesor::class)->create();

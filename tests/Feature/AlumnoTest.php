@@ -122,6 +122,19 @@ class AlumnoTest extends BaseTest
 
     }
 
+    
+    public function test_actualizar_id_not_found()
+    {
+        $id = 1;
+        
+        $nuevoNombre = 'Juan Marcos';
+        $request = ['nombre' => $nuevoNombre];
+
+        $response = $this->put($this->apiUrl($id), $request);
+        
+        $this->assertError($response);
+    }
+
     public function test_eliminar_por_id()
     {
         $alumno = factory(Alumno::class)->create();

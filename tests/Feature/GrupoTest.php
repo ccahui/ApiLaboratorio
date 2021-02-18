@@ -39,5 +39,14 @@ class GrupoTest extends BaseTest
         $this->assertSuccess($response);
         $response->assertJson(['data' => $data]);
     }
+    
+    public function test_obtener_por_id_not_found()
+    {
+       $id = 1;
+        
+        $response = $this->get($this->apiUrl($id));
+       
+        $this->assertError($response);
+    }
 }
 

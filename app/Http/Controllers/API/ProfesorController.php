@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProfesorRequest;
+use App\Http\Requests\UpdateProfesorRequest;
 use Illuminate\Http\Request;
 
 use App\Models\Profesor;
 use App\Http\Resources\ProfesorCollection;
 use App\Http\Resources\ProfesorResource;
-use Validator;
 
 class ProfesorController extends BaseController
 {
@@ -19,8 +19,8 @@ class ProfesorController extends BaseController
      */
     public function index(Request $request)
     {
-      $profesores = new ProfesorCollection(Profesor::paginate());
-      return $profesores;
+        $profesores = new ProfesorCollection(Profesor::paginate());
+        return $profesores;
     }
 
     /**
@@ -29,23 +29,13 @@ class ProfesorController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProfesorRequest $request)
     {
-        $rules =  [
-            'nombre'=>'required',
-            'apellido'=>'required',
-            'gmail'=>'required | email | unique:profesores'
-        ];
         $input = $request->all();
-
-        $validator = Validator::make($input, $rules);
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors(), 400);       
-        }
 
         $profesor = Profesor::create($input)->refresh();
         $data = new ProfesorResource($profesor);
-        
+
         return $this->sendResponse($data, 'Profesor created successfully', 201);
     }
 
@@ -57,10 +47,8 @@ class ProfesorController extends BaseController
      */
     public function show($id)
     {
-        $profesor = Profesor::find($id);
-        if($profesor == null ){
-            return $this->sendError('Profesor not found');
-        }
+        $profesor = Profesor::findOrFail($id);
+
         $data = new ProfesorResource($profesor);
         return $this->sendResponse($data, 'Profesor retrieved successfully.');
     }
@@ -72,27 +60,12 @@ class ProfesorController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //**TODO */
-    public function update(Request $request, $id)
+    public function update(UpdateProfesorRequest $request, $id)
     {
         $profesor = Profesor::find($id);
-        if($profesor == null ){
-            return $this->sendError('Profesor not found');
-        }
-
-        $rules =  [
-            'nombre'=>'sometimes | required',
-            'apellido'=>'sometimes | required',
-            'gmail'=>'sometimes | required | email |unique:profesores,gmail,'.$profesor->id, 
-        ];
         
         $input = $request->all();
-        $validator = Validator::make($input, $rules);
-        
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors(), 400);       
-        }
-      
+
         $profesor->update($input);
         $data = new ProfesorResource($profesor);
 
@@ -108,13 +81,13 @@ class ProfesorController extends BaseController
     public function destroy($id)
     {
         $profesor = Profesor::find($id);
-        if($profesor == null ){
+        if ($profesor == null) {
             return $this->sendError('Profesor not found');
         }
 
         $profesor->delete();
-        
+
         $data = new ProfesorResource($profesor);
-        return $this->sendResponse($data,'Profesor deleted successfully.');
+        return $this->sendResponse($data, 'Profesor deleted successfully.');
     }
 }

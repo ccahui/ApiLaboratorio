@@ -105,6 +105,18 @@ class LaboratorioTest extends BaseTest
         $response->assertJson(['data' => $data]);                
     }
 
+    public function test_actualizar_id_not_found()
+    {
+        $id = 1;
+        $nuevoGrupo = 'A';
+
+        $request = ['grupo' => $nuevoGrupo];
+
+        $response = $this->put($this->apiUrl($id), $request);
+
+        $this->assertError($response);                
+    }
+
     public function test_grupo_required_validacion_para_actualizar()
     {
         $laboratorio = factory(Laboratorio::class)->create();

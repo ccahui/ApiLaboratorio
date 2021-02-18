@@ -14,11 +14,8 @@ $factory->define(Alumno::class, function (Faker $faker) {
             'fechaFin'=> now(),
             ]);
     }
-    /**TODO doWhile generar un CUI UNIQUE*/
-    $cui = $faker->numberBetween($inicio = 20150000, $fin=20200000);
-    while(Alumno::where('cui',$cui)->count()){
-        $cui = $faker->numberBetween($inicio = 20150000, $fin=20200000);
-    }
+    /**TODO GENERAR un CUI UNICO*/
+    $cui = $faker->unique()->numberBetween(20140000, 20210000);
     
     return [
         'nombre'=> $faker->name,

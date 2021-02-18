@@ -15,17 +15,23 @@ class MatriculaTableSeeder extends Seeder
     public function run()
     {
         $alumnos  = Alumno::all();
-        foreach($alumnos as $alumno) {
+        foreach ($alumnos as $alumno) {
             $cursos = $this->seleccionarCursos(4);
-            foreach($cursos as $curso) {
-               $alumno->cursos()->attach($curso->id,[
-                    'periodo_id' => Periodo::all()->first()->id,
-                    'laboratorio_id' => $curso->laboratorios()->get()->random()->id,
-                ]);
+            foreach ($cursos as $curso) {
+                $this->matricularCurso($alumno, $curso);
             }
         }
     }
-    private function seleccionarCursos($cantidad){
-        return Curso::where('tieneLab', true)->get()->random(4);
+    private function seleccionarCursos($cantidad)
+    {
+        return Curso::where('tieneLab', true)->get()->random($cantidad);
+    }
+
+    private function matricularCurso($alumno, $curso)
+    {
+        $alumno->cursos()->attach($curso->id, [
+            'periodo_id' => Periodo::all()->first()->id,
+            'laboratorio_id' => $curso->laboratorios()->get()->random()->id,
+        ]);
     }
 }
